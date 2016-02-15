@@ -44,11 +44,21 @@ nnoremap B ^
 nnoremap E $
 nnoremap $ <nop>
 nnoremap ^ <nop>
+nnoremap Y  y$
+" use as escape
 inoremap jk <esc>
 vnoremap jk <esc>
-nnoremap Y  y$
+inoremap kj <esc>
+vnoremap kj <esc>
+" reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
+" recenter when searching
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
 
 onoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
 xnoremap an :<c-u>call <SID>NextTextObject('a', 'f')<cr>
@@ -84,6 +94,7 @@ let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " Undo tree
+let g:undotree_WindowLayout=2
 let g:undotree_DiffCommand="diff -u"
 
 " Backups
