@@ -2,6 +2,9 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
+" Spell checking
+setlocal spell spelllang=en_gb " turn spell checking on, use z= to see alternatives
+
 set nocompatible
 syntax enable           " enable syntax processing
 colorscheme gruvbox 
@@ -9,13 +12,14 @@ set background=dark
 
 set hidden
 set number              " show line numbers
-set wildmenu
+set wildchar=<Tab> wildmenu wildmode=full
 set showmatch           " higlight matching parenthesis
 set ttyfast                     " faster redraw
 set backspace=indent,eol,start  " better backspace
 set colorcolumn=100
 set laststatus=2        " show status line
 set autoread            " reload files changed outside automatically
+set wrap
 set scrolloff=5         " Always shows 5 lines above/below the cursor
 set clipboard=unnamed   " copy to clipboard with p
 
@@ -104,9 +108,6 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp 
 set writebackup
 
-" Spell checking
-setlocal spell spelllang=en_gb " turn spell checking on, use z= to see alternatives
-
 " Custom Functions 
 function! ToggleNumber()
     if(&relativenumber == 1)
@@ -131,20 +132,15 @@ function! s:NextTextObject(motion, dir)
   exe "normal! ".a:dir.c."v".a:motion.c
 endfunction
 
-" air-line
+" Air-line
  if !exists('g:airline_symbols')
      let g:airline_symbols = {}
  endif
 
-" Unicode symbols
  let g:airline_left_sep = ''
  let g:airline_right_sep = ''
  let g:airline_symbols.linenr = '|'
  let g:airline_symbols.branch = 'Y'
  let g:airline_symbols.paste = 'p'
- let g:airline_symbols.paste = '∥'
- let g:airline_symbols.paste = '∥'
- let g:airline_symbols.paste = '∥'
- let g:airline_symbols.paste = '∥'
- let g:airline_symbols.paste = '∥'
  let g:airline_symbols.whitespace = ''
+
