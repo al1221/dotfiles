@@ -9,19 +9,20 @@ set nocompatible
 syntax enable           " enable syntax processing
 colorscheme gruvbox 
 set background=dark
-
 set hidden
 set number              " show line numbers
 set wildchar=<Tab> wildmenu wildmode=full
-set showmatch           " higlight matching parenthesis
 set ttyfast                     " faster redraw
 set backspace=indent,eol,start  " better backspace
-set colorcolumn=100
 set laststatus=2        " show status line
 set autoread            " reload files changed outside automatically
 set wrap
-set scrolloff=5         " Always shows 5 lines above/below the cursor
+set scrolloff=3         " Always shows 5 lines above/below the cursor
 set clipboard=unnamed   " copy to clipboard with p
+set visualbell
+set undodir=$HOME/.vimundo
+set undofile
+set relativenumber
 
 " Indentation
 set tabstop=4           " 4 space tab
@@ -30,9 +31,17 @@ set shiftwidth=4
 set autoindent
 
 " Searching 
+nnoremap / /\v
+vnoremap / /\v
 set ignorecase          " ignore case when searching
+set smartcase           " but if one of the letter is upper case use it
 set incsearch           " search as characters are entered
+set showmatch           " highlight matching parenthesis
 set hlsearch            " highlight all matches
+set gdefault            " globally replace with :%s/foo/bar
+nnoremap <leader><space> :noh<CR>
+nnoremap <tab> %
+vnoremap <tab> %
 
 " Splits
 set splitbelow
@@ -52,8 +61,10 @@ nnoremap Y  y$
 " use as escape
 inoremap jk <esc>
 vnoremap jk <esc>
+cnoremap jk <esc>
 inoremap kj <esc>
 vnoremap kj <esc>
+cnoremap kj <esc>
 " reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
@@ -75,21 +86,30 @@ xnoremap il :<c-u>call <SID>NextTextObject('i', 'F')<cr>
 
 " Leader Shortcuts 
 let mapleader="\<space>"
-let maplocalleader="'"
+let maplocalleader=","
 
 nnoremap <leader>w :Ex<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>l :call ToggleNumber()<CR>
-nnoremap <leader><space> :noh<CR>
 nnoremap <leader>s :mksession<CR>
+nnoremap <leader>m :make<CR>
 nnoremap <leader>1 :set number!<CR>
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
-nnoremap <leader>p "*p
+nnoremap p "*p
 nnoremap gb :ls<cr>:b<space>
 
-nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>ev :e $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" C++
+let g:ConqueGdb_Leader = maplocalleader
+set makeprg=g++\ -g\ %
+nnoremap <leader>r :!./a.out<CR>
+nnoremap <silent><localleader>y :ConqueGdbCommand y<CR>
+nnoremap <silent><localleader>n :ConqueGdbCommand n<CR>
+nnoremap <localleader>c :ConqueGdbVSplit a.out<CR> 
+nnoremap <localleader>s :ConqueTerm bash<CR>
 
 " CtrlP 
 let g:ctrlp_match_window = 'bottom,order:ttb'
@@ -144,3 +164,6 @@ endfunction
  let g:airline_symbols.paste = 'p'
  let g:airline_symbols.whitespace = ''
 
+" Latex
+autocmd BufNewFile,BufRead *.tex set makeprg=latexmk\ -pdf\ %<CR>
+nnoremap <leader>v :w<CR>:!~/Applications/Skim.app/Contents/SharedSupport/displayline <C-r>=line('.')<CR> %:r.pdf<CR><CR>
